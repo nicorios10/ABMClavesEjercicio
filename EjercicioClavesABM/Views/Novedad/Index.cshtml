@@ -1,0 +1,53 @@
+﻿@model IEnumerable<EjercicioClavesABM.Models.Novedad>
+
+@{
+    ViewBag.Title = "Novedades";
+}
+<br />
+<h2>Lista de Novedades</h2>
+
+<br />
+<p class="text-center">
+    @Html.ActionLink("Crear Novedad", "Create", new { }, new { @class = "btn btn-primary" })
+</p>
+<br /><br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Imagen)
+        </th>
+        <th>
+            <em>Acciones</em>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.Raw(item.Descripcion.Substring(0, item.Descripcion.Length > 70 ? 70 : item.Descripcion.Length))
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Imagen))
+                {
+                    <img src="@Url.Content(item.Imagen)" alt="Image" style="width:100px; height:100px; max-width:100%; height: auto" class="img-thumbnail" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.NovedadId }, new { @class = "btn btn-warning" }) 
+                @Html.ActionLink("Detalles", "Details", new { id = item.NovedadId }, new { @class = "btn btn-info" }) 
+                @Html.ActionLink("Borrar", "Delete", new { id = item.NovedadId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
